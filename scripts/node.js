@@ -1,5 +1,7 @@
-const filterMe = (array) => {
-  return array
+export class Node {
+  constructor(data, node = null) {
+    this.data = data
+    this.isWord = false;
+    this.children = node
+  }
 }
-
-export default filterMe
