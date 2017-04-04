@@ -64,7 +64,27 @@ describe('trie', () => {
 
     assert.deepEqual(completion.findNode('prot'), completion.root.children['p'].children['r'].children['o'].children['t'])
     assert.deepEqual(completion.findNode('prog'), completion.root.children['p'].children['r'].children['o'].children['g'])
+  })
 
+  it('should have isWord be true on all words', () => {
+
+    assert.deepEqual(completion.findNode('protein').isWord, true)
+    assert.deepEqual(completion.findNode('program').isWord, true)
+  })
+
+  it('should have isWord be false on non - words', () => {
+
+    assert.deepEqual(completion.findNode('protei').isWord, false)
+    assert.deepEqual(completion.findNode('protein').isWord, true)
+  })
+
+  it('should have isWord be on words that are part of larger words', () => {
+    completion.insert('ant')
+    completion.insert('anthem')
+
+    assert.deepEqual(completion.findNode('ant').isWord, true)
+    assert.deepEqual(completion.findNode('anth').isWord, false)
+    assert.deepEqual(completion.findNode('anthem').isWord, true)
   })
 
 })
