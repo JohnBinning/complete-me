@@ -1,12 +1,13 @@
 import { assert } from 'chai'
 import { Node } from '../scripts/node'
 import { Trie } from '../scripts/trie'
+const text = "/usr/share/dict/words"
+
 require('locus')
 
 describe('trie', () => {
 
   var completion = new Trie
-  var node = new Node
 
   it('should be a function', () => {
     assert.isFunction(Trie)
@@ -28,7 +29,7 @@ describe('trie', () => {
     assert.equal(completion.count(), 2)
   })
 
-  it('should insert a word into the dictionary', () => {
+  it.skip('should insert a word into the dictionary', () => {
 
     completion.insert('pizza')
     // eval(locus);

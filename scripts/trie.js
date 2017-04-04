@@ -4,7 +4,8 @@ require('locus')
 
 export class Trie {
   constructor() {
-    this.dictionary = []
+    // this.dictionary = []
+    this.counter = 0
     this.root = new Node('')
   }
 
@@ -45,7 +46,7 @@ export class Trie {
     let currentNode = this.root;
     let accumLetters = '';
 
-    this.dictionary.push(input)
+    // this.dictionary.push(input)
 
     input.split('').forEach(letter => {
 
@@ -59,8 +60,13 @@ export class Trie {
       currentNode.address = accumLetters;
     })
     currentNode.isWord = true;
+    this.counter++
   }
   count () {
-    return this.dictionary.length
+    return this.counter
+  }
+
+  populate () {
+    
   }
 }
