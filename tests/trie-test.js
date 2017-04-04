@@ -1,12 +1,14 @@
 import { assert } from 'chai'
 import { Node } from '../scripts/node'
 import { Trie } from '../scripts/trie'
+const text = "/usr/share/dict/words"
 
+require('locus')
 
 describe('trie', () => {
 
   var completion = new Trie
-  var node = new Node
+
   it('should be a function', () => {
     assert.isFunction(Trie)
   })
@@ -27,7 +29,7 @@ describe('trie', () => {
     assert.equal(completion.count(), 2)
   })
 
-  it('should insert a word into the dictionary', () => {
+  it.skip('should insert a word into the dictionary', () => {
 
     completion.insert('pizza')
     // eval(locus);
@@ -64,7 +66,53 @@ describe('trie', () => {
 
     assert.deepEqual(completion.findNode('prot'), completion.root.children['p'].children['r'].children['o'].children['t'])
     assert.deepEqual(completion.findNode('prog'), completion.root.children['p'].children['r'].children['o'].children['g'])
+  })
 
+  it('should have isWord be true on all words', () => {
+
+    assert.deepEqual(completion.findNode('protein').isWord, true)
+    assert.deepEqual(completion.findNode('program').isWord, true)
+  })
+
+  it('should have isWord be false on non - words', () => {
+
+    assert.deepEqual(completion.findNode('protei').isWord, false)
+    assert.deepEqual(completion.findNode('protein').isWord, true)
+  })
+
+  it('should have isWord be on words that are part of larger words', () => {
+    completion.insert('ant')
+    completion.insert('anthem')
+
+    assert.deepEqual(completion.findNode('ant').isWord, true)
+    assert.deepEqual(completion.findNode('anth').isWord, false)
+    assert.deepEqual(completion.findNode('anthem').isWord, true)
+  })
+
+  it('should return an array of suggested words', () => {
+    let newTrie = new Trie('b');
+
+    newTrie.insert('pizza');
+    newTrie.insert('pit');
+    let suggs = newTrie.suggest('pi')
+
+
+    assert.deepEqual(suggs, ['pizza', 'pit']);
+  })
+
+  it('suggest should ignore words that arent suggestable', () => {
+    let newTrie = new Trie('b');
+
+    newTrie.insert('pizza');
+    newTrie.insert('pit');
+    newTrie.insert('pie');
+    newTrie.insert('person');
+    newTrie.insert('dog');
+    newTrie.insert('pound');
+    let suggs = newTrie.suggest('pi')
+
+
+    assert.deepEqual(suggs, ['pizza', 'pit', 'pie']);
   })
 
 })

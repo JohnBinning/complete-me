@@ -4,7 +4,8 @@ require('locus')
 
 export class Trie {
   constructor() {
-    this.dictionary = []
+    // this.dictionary = []
+    this.counter = 0
     this.root = new Node('')
   }
 
@@ -15,14 +16,29 @@ export class Trie {
       if (currentNode.children[letter] !== letter) {
         currentNode = currentNode.children[letter];
       }
-      if (currentNode.address == input) {
-        console.log(currentNode + ' found')
-        return currentNode
-      }
-      return currentNode
+      // if (currentNode.address == input) {
+      //   return currentNode
+      // }
     })
-    console.log(currentNode.data)
     return currentNode
+  }
+
+  suggest (suggestion) {
+    let suggestionArr = [];
+    let currentNode = this.findNode(suggestion);
+
+    if (currentNode.isWord) {
+      suggestionArr.push(suggestion);
+    }
+
+    if (!currentNode.children) {
+      return;
+    } else {
+      Object.keys(currentNode.children).forEach(letter => {
+        suggestionArr = suggestionArr.concat(this.suggest(suggestion + letter));
+      })
+    }
+    return suggestionArr;
   }
 
   insert (input) {
@@ -30,7 +46,7 @@ export class Trie {
     let currentNode = this.root;
     let accumLetters = '';
 
-    this.dictionary.push(input)
+    // this.dictionary.push(input)
 
     input.split('').forEach(letter => {
 
@@ -44,8 +60,13 @@ export class Trie {
       currentNode.address = accumLetters;
     })
     currentNode.isWord = true;
+    this.counter++
   }
   count () {
-    return this.dictionary.length
+    return this.counter
+  }
+
+  populate () {
+    
   }
 }
