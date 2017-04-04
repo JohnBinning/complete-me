@@ -1,4 +1,7 @@
 import { Node } from './node'
+var fs = require('fs')
+const text = "/usr/share/dict/words"
+
 require('locus')
 
 
@@ -67,6 +70,10 @@ export class Trie {
   }
 
   populate () {
-    
+    let dictionary = fs.readFileSync(text).toString().trim().split('\n')
+    dictionary.forEach(word => {
+      this.insert(word)
+    })
+
   }
 }
