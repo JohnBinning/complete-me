@@ -1,37 +1,49 @@
+'use strict'
 import { Node } from './node'
+require('locus')
+
 
 export class Trie {
   constructor() {
     this.dictionary = []
-    this.node = new Node(null)
-    this.root = {}
-
+    this.root = new Node('')
   }
-  insert(text) {
-    this.dictionary.push(text)
 
-    if (!Array.isArray(word)) {
-      var word = text.split('')
+  findNode(input) {
+    let currentNode = this.root;
 
-      return word
-    }
-
-    word.forEach((val, i) =>{
-      //new node
-      if (!val.data) {
-        this.children = new Node (word[i + 1], this.insert(word.slice(i + 1, word.length)) )
-      } else if (!word[i + 1]) {
-        return this.isWord = true
-      } else {
-        val.children[i + 1] = this.insert(word.slice(i + 1, word.length))
+    input.split('').forEach(letter => {
+      if (currentNode.children[letter] !== letter) {
+        currentNode = currentNode.children[letter];
+      }  if (currentNode.address == input) {
+        console.log(currentNode + ' found')
+        return currentNode
       }
+      return currentNode
     })
+    console.log(currentNode.data)
+    return currentNode
   }
 
-  findNode(data) {
-    //start at root
-    //while data != to the node data, move to next node
-    //else return node
+  insert (input) {
+
+    let currentNode = this.root;
+    let accumLetters = '';
+
+    this.dictionary.push(input)
+
+    input.split('').forEach(letter => {
+
+
+      if (currentNode.children[letter]) {
+        return currentNode = currentNode.children[letter];
+      }
+      currentNode.children[letter] = new Node(letter);
+      currentNode = currentNode.children[letter];
+      accumLetters = accumLetters + letter;
+      currentNode.address = accumLetters;
+    })
+    currentNode.isWord = true;
   }
 
 }

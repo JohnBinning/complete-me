@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import { Node } from '../scripts/node'
 import { Trie } from '../scripts/trie'
-
+require('locus')
 
 
 describe('node', () => {
@@ -11,11 +11,13 @@ describe('node', () => {
     assert.isFunction(Node)
   })
 
-  it('should insert a word into the dictionary', () => {
-    var node = new Node()
-
-    completion.insert('pizza')
-    assert.equal(completion.dictionary[0], 'pizza')
+  it('should have an address', () => {
+    completion.insert('ape')
+    completion.insert('cool')
+    // console.log(completion.root.children)
+    // console.log(completion.root.children.p.children)
+    assert.equal(completion.root.children.a.data, 'a')
+    assert.equal(completion.root.children.a.children.p.address, 'ap')
   })
 
   it('should take a data value', () => {

@@ -1,5 +1,5 @@
 export class Node {
-  constructor(data, node = null) {
+  constructor(data = null, node = {}) {
     this.data = data
     this.isWord = false;
     this.children = node
