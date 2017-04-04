@@ -1,4 +1,3 @@
-'use strict'
 import { Node } from './node'
 require('locus')
 
@@ -15,7 +14,8 @@ export class Trie {
     input.split('').forEach(letter => {
       if (currentNode.children[letter] !== letter) {
         currentNode = currentNode.children[letter];
-      }  if (currentNode.address == input) {
+      }
+      if (currentNode.address == input) {
         console.log(currentNode + ' found')
         return currentNode
       }
@@ -45,5 +45,7 @@ export class Trie {
     })
     currentNode.isWord = true;
   }
-
+  count () {
+    return this.dictionary.length
+  }
 }
