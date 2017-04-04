@@ -15,14 +15,29 @@ export class Trie {
       if (currentNode.children[letter] !== letter) {
         currentNode = currentNode.children[letter];
       }
-      if (currentNode.address == input) {
-        console.log(currentNode + ' found')
-        return currentNode
-      }
-      return currentNode
+      // if (currentNode.address == input) {
+      //   return currentNode
+      // }
     })
-    console.log(currentNode.data)
     return currentNode
+  }
+
+  suggest (suggestion) {
+    let suggestionArr = [];
+    let currentNode = this.findNode(suggestion);
+
+    if (currentNode.isWord) {
+      suggestionArr.push(suggestion);
+    }
+
+    if (!currentNode.children) {
+      return;
+    } else {
+      Object.keys(currentNode.children).forEach(letter => {
+        suggestionArr = suggestionArr.concat(this.suggest(suggestion + letter));
+      })
+    }
+    return suggestionArr;
   }
 
   insert (input) {

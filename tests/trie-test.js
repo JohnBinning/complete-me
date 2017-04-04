@@ -1,12 +1,13 @@
 import { assert } from 'chai'
 import { Node } from '../scripts/node'
 import { Trie } from '../scripts/trie'
-
+require('locus')
 
 describe('trie', () => {
 
   var completion = new Trie
   var node = new Node
+
   it('should be a function', () => {
     assert.isFunction(Trie)
   })
@@ -85,6 +86,32 @@ describe('trie', () => {
     assert.deepEqual(completion.findNode('ant').isWord, true)
     assert.deepEqual(completion.findNode('anth').isWord, false)
     assert.deepEqual(completion.findNode('anthem').isWord, true)
+  })
+
+  it('should return an array of suggested words', () => {
+    let newTrie = new Trie('b');
+
+    newTrie.insert('pizza');
+    newTrie.insert('pit');
+    let suggs = newTrie.suggest('pi')
+
+
+    assert.deepEqual(suggs, ['pizza', 'pit']);
+  })
+
+  it('suggest should ignore words that arent suggestable', () => {
+    let newTrie = new Trie('b');
+
+    newTrie.insert('pizza');
+    newTrie.insert('pit');
+    newTrie.insert('pie');
+    newTrie.insert('person');
+    newTrie.insert('dog');
+    newTrie.insert('pound');
+    let suggs = newTrie.suggest('pi')
+
+
+    assert.deepEqual(suggs, ['pizza', 'pit', 'pie']);
   })
 
 })
