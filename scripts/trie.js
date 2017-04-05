@@ -25,7 +25,7 @@ export class Trie {
     return currentNode
   }
 
-  suggest (text, suggestion = []) {
+  suggestMachine (text, suggestion = []) {
     let currentNode = this.findNode(text)
     let suggestionArr = suggestion;
 
@@ -34,17 +34,33 @@ export class Trie {
     }
 
     Object.keys(currentNode.children).forEach(key => {
-      this.suggest(text + key, suggestionArr)
+      this.suggestMachine(text + key, suggestionArr)
     })
+
+
+    return suggestionArr
+    // suggestionArr.sort(function(a, b) {
+    //   return b.timesSelected - a.timesSelected
+    // })
+
+    // eval(locus)
+    // console.log("!-------------!")
+    // console.log(suggestionArr)
+    //
+    // let sortedArray = suggestionArr.map(obj => {
+    //   return obj.word
+    // })
+    //
+    // return sortedArray;
+  }
+
+  suggest (text) {
+    let suggestionArr = this.suggestMachine(text)
 
 
     suggestionArr.sort(function(a, b) {
       return b.timesSelected - a.timesSelected
     })
-
-    // eval(locus)
-    console.log("!-------------!")
-    console.log(suggestionArr)
 
     let sortedArray = suggestionArr.map(obj => {
       return obj.word
@@ -52,7 +68,6 @@ export class Trie {
 
     return sortedArray;
   }
-  
 
   select(input, selected) {
     let priorityWord = this.suggest(input).find(val => {
