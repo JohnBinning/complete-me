@@ -15,20 +15,29 @@ describe('trie-dictionary', () =>{
 
   it('should have the word bear in the trie', () => {
     var completion = new Trie
-    completion.populate()
+    completion.insert('bear')
 
     assert.equal(completion.findNode('bear').isWord, true)
   })
 
   it('should suggest words', () => {
     var completion = new Trie
-    completion.populate()
+    completion.insert('pize')
+    completion.insert('pizza')
+    completion.insert('pizzeria')
+    completion.insert('pizzicato')
+    completion.insert('pizzle')
+
     assert.deepEqual(completion.suggest("piz"), ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"])
   })
 
   it('select should move priority words to the front of the suggest array', () => {
     var completion = new Trie
-    completion.populate()
+    completion.insert('pize')
+    completion.insert('pizza')
+    completion.insert('pizzeria')
+    completion.insert('pizzicato')
+    completion.insert('pizzle')
     assert.deepEqual(completion.suggest("piz"), ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"])
     completion.select('piz', 'pizzle')
     assert.deepEqual(completion.suggest("piz"), ["pizzle", "pize", "pizza", "pizzeria", "pizzicato"])
@@ -37,7 +46,13 @@ describe('trie-dictionary', () =>{
   it('select should move other priority words to the front of the suggest array', () => {
     var completion = new Trie
 
-    completion.populate()
+    completion.insert('hoodless')
+    completion.insert('hoodlike')
+    completion.insert('hoodlum')
+    completion.insert('hoodlumish')
+    completion.insert('hoodlumism')
+    completion.insert('hoodlumize')
+
 
     assert.deepEqual(completion.suggest("hoodl"), [ 'hoodless', 'hoodlike', 'hoodlum', 'hoodlumish', 'hoodlumism', 'hoodlumize' ])
 
@@ -50,7 +65,13 @@ describe('trie-dictionary', () =>{
   it('select should move two priority words to the front of the suggest array', () => {
 
     var completion = new Trie
-    completion.populate()
+    completion.insert('hoodless')
+    completion.insert('hoodlike')
+    completion.insert('hoodlum')
+    completion.insert('hoodlumish')
+    completion.insert('hoodlumism')
+    completion.insert('hoodlumize')
+    
     assert.deepEqual(completion.suggest("hoodl"), [ 'hoodless', 'hoodlike', 'hoodlum', 'hoodlumish', 'hoodlumism', 'hoodlumize' ])
 
     completion.select('hoodl', 'hoodlumish')

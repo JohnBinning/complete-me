@@ -37,7 +37,6 @@ export class Trie {
       this.suggestMachine(text + key, suggestionArr)
     })
 
-
     return suggestionArr
     // suggestionArr.sort(function(a, b) {
     //   return b.timesSelected - a.timesSelected
@@ -56,7 +55,6 @@ export class Trie {
 
   suggest (text) {
     let suggestionArr = this.suggestMachine(text)
-
 
     suggestionArr.sort(function(a, b) {
       return b.timesSelected - a.timesSelected
@@ -81,7 +79,7 @@ export class Trie {
 
     let currentNode = this.root
 
-    input.split('').forEach(letter => {
+    input.toLowerCase().split('').forEach(letter => {
 
       if (currentNode.children[letter]) {
         return currentNode = currentNode.children[letter]
@@ -89,8 +87,8 @@ export class Trie {
       currentNode.children[letter] = new Node(letter)
       currentNode = currentNode.children[letter]
     })
+    currentNode.isWord == false ? this.counter++ : null
     currentNode.isWord = true
-    this.counter++
   }
   count () {
     return this.counter
@@ -99,7 +97,7 @@ export class Trie {
   populate () {
     let dictionary = fs.readFileSync(text).toString().trim().split('\n')
 
-    dictionary.forEach(word => {
+    dictionary.forEach( word => {
       this.insert(word)
     })
   }

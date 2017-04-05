@@ -24,6 +24,16 @@ describe('trie', () => {
     assert.equal(completion.count(), 2)
   })
 
+  it('should not count duplicate words', () => {
+    var completion2 = new Trie
+
+    assert.equal(completion2.count(), 0)
+    completion2.insert('ape')
+    assert.equal(completion2.count(), 1)
+    completion2.insert('ape')
+    assert.equal(completion2.count(), 1)
+  })
+
   it('should make a node', () => {
     completion.insert('ape')
     assert.equal(completion.root.children.a.data, 'a')
