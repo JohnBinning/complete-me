@@ -26,22 +26,27 @@ export class Trie {
     return currentNode
   }
 
-  suggest (suggestion) {
-    let suggestionArr = [];
-    let currentNode = this.findNode(suggestion);
+  suggest (text, suggestion = []) {
+    let currentNode = this.findNode(text);
+    let suggestionArr = suggestion;
 
     if (currentNode.isWord) {
-      suggestionArr.push(suggestion);
+      suggestionArr.push({word: text, timesSelected: currentNode.timesSelected});
     }
 
-    if (!currentNode.children) {
-      return;
-    } else {
-      Object.keys(currentNode.children).forEach(letter => {
-        suggestionArr = suggestionArr.concat(this.suggest(suggestion + letter));
-      })
-    }
-    return suggestionArr;
+    Object.keys(currentNode.children).forEach(key => {
+      this.suggest(text + key, suggestionArr)
+    })
+
+    suggestionArr.sort(function(a, b) {
+      return b.timesSelected - a.timesSelected
+    })
+
+    let sortedArray = suggestionArr.map(obj => {
+      return obj['word']
+    })
+    
+    return sortedArray;
   }
 
   insert (input) {

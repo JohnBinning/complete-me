@@ -3,5 +3,6 @@ export class Node {
     this.data = data
     this.isWord = false;
     this.children = {}
+    this.timesSelected = 0
   }
 }
