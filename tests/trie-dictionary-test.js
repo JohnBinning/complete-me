@@ -1,5 +1,4 @@
 import { assert } from 'chai'
-import { Node } from '../scripts/node'
 import { Trie } from '../scripts/trie'
 
 require('locus')

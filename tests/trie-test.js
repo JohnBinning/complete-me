@@ -1,7 +1,5 @@
 import { assert } from 'chai'
-import { Node } from '../scripts/node'
 import { Trie } from '../scripts/trie'
-const text = "/usr/share/dict/words"
 
 require('locus')
 
@@ -13,27 +11,12 @@ describe('trie', () => {
     assert.isFunction(Trie)
   })
 
-  it.skip('should have a null root', () => {
-    // console.log(completion.root)
-    completion.insert('pizza')
-    completion.insert('bad')
-    assert.deepEqual(completion.root, new Node(''))
-    completion.insert('bat')
-  })
-
   it('should count words', () => {
     assert.equal(completion.count(), 0)
     completion.insert('ape')
     assert.equal(completion.count(), 1)
     completion.insert('ale')
     assert.equal(completion.count(), 2)
-  })
-
-  it.skip('should insert a word into the dictionary', () => {
-
-    completion.insert('pizza')
-    // eval(locus);
-    assert.equal(completion.dictionary.includes('pizza'), true)
   })
 
   it('should make a node', () => {
@@ -90,29 +73,29 @@ describe('trie', () => {
   })
 
   it('should return an array of suggested words', () => {
-    let newTrie = new Trie('b');
+    let newTrie = new Trie('b')
 
-    newTrie.insert('pizza');
-    newTrie.insert('pit');
+    newTrie.insert('pizza')
+    newTrie.insert('pit')
     let suggs = newTrie.suggest('pi')
 
 
-    assert.deepEqual(suggs, ['pizza', 'pit']);
+    assert.deepEqual(suggs, ['pizza', 'pit'])
   })
 
   it('suggest should ignore words that arent suggestable', () => {
-    let newTrie = new Trie('b');
+    let newTrie = new Trie('b')
 
-    newTrie.insert('pizza');
-    newTrie.insert('pit');
-    newTrie.insert('pie');
-    newTrie.insert('person');
-    newTrie.insert('dog');
-    newTrie.insert('pound');
+    newTrie.insert('pizza')
+    newTrie.insert('pit')
+    newTrie.insert('pie')
+    newTrie.insert('person')
+    newTrie.insert('dog')
+    newTrie.insert('pound')
     let suggs = newTrie.suggest('pi')
 
 
-    assert.deepEqual(suggs, ['pizza', 'pit', 'pie']);
+    assert.deepEqual(suggs, ['pizza', 'pit', 'pie'])
   })
 
 })

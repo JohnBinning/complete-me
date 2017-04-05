@@ -4,7 +4,6 @@ const text = "/usr/share/dict/words"
 
 require('locus')
 
-
 export class Trie {
   constructor() {
     // this.dictionary = []
@@ -13,11 +12,11 @@ export class Trie {
   }
 
   findNode(input) {
-    let currentNode = this.root;
+    let currentNode = this.root
 
     input.split('').forEach(letter => {
       if (currentNode.children[letter] !== letter) {
-        currentNode = currentNode.children[letter];
+        currentNode = currentNode.children[letter]
       }
       // if (currentNode.address == input) {
       //   return currentNode
@@ -27,7 +26,7 @@ export class Trie {
   }
 
   suggest (text, suggestion = []) {
-    let currentNode = this.findNode(text);
+    let currentNode = this.findNode(text)
     let suggestionArr = suggestion;
 
     if (currentNode.isWord) {
@@ -54,15 +53,13 @@ export class Trie {
       return val === selected
     })
 
-    let node = this.findNode(priorityWord)
-    node.timesSelected++
-
+    this.findNode(priorityWord).timesSelected++
   }
 
   insert (input) {
 
-    let currentNode = this.root;
-    let accumLetters = '';
+    let currentNode = this.root
+    let accumLetters = ''
 
     // this.dictionary.push(input)
 
@@ -70,14 +67,14 @@ export class Trie {
 
 
       if (currentNode.children[letter]) {
-        return currentNode = currentNode.children[letter];
+        return currentNode = currentNode.children[letter]
       }
-      currentNode.children[letter] = new Node(letter);
-      currentNode = currentNode.children[letter];
-      accumLetters = accumLetters + letter;
-      currentNode.address = accumLetters;
+      currentNode.children[letter] = new Node(letter)
+      currentNode = currentNode.children[letter]
+      accumLetters = accumLetters + letter
+      currentNode.address = accumLetters
     })
-    currentNode.isWord = true;
+    currentNode.isWord = true
     this.counter++
   }
   count () {
@@ -86,6 +83,7 @@ export class Trie {
 
   populate () {
     let dictionary = fs.readFileSync(text).toString().trim().split('\n')
+
     dictionary.forEach(word => {
       this.insert(word)
     })
