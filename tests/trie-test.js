@@ -11,6 +11,11 @@ describe('trie', () => {
     assert.isFunction(Trie)
   })
 
+  it('should be a class with a constructor', () => {
+
+    assert.instanceOf(completion, Trie, 'completion is an instance of Trie')
+  })
+
   it('should count words', () => {
     assert.equal(completion.count(), 0)
     completion.insert('ape')

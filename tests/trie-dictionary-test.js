@@ -23,8 +23,22 @@ describe('trie-dictionary', () =>{
 
   it('select should move priority words to the front of the suggest array', () => {
     assert.deepEqual(completion.suggest("piz"), ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"])
-    completion.select('piz', 'pizzeria')
-    assert.deepEqual(completion.suggest("piz"), ["pizzeria", "pize", "pizza", "pizzicato", "pizzle"])
+    completion.select('piz', 'pizzle')
+    assert.deepEqual(completion.suggest("piz"), ["pizzle", "pize", "pizza", "pizzeria", "pizzicato"])
+  })
+
+  it.only('select should move other priority words to the front of the suggest array', () => {
+    completion.populate()
+    let hood = completion.suggest('hoodlu')
+    // console.log(hood)
+    assert.deepEqual(completion.suggest("hood"), [ 'hoodlumism', 'hoodlumize', 'hooded', 'hoodedness', 'hoodful', 'hood', 'hoodcap', 'hoodlike', 'hoodlum', 'hoodless', 'hoodlumish',
+    'hoodie', 'hoodman', 'hoodmold', 'hoodoo', 'hoodsheaf', 'hoodshy', 'hoodshyness', 'hoodwink', 'hoodwinkable', 'hoodwinker', 'hoodwise', 'hoodwort' ])
+
+    completion.select('hood', 'hoodlum')
+    // eval(locus);
+    var suggestions = completion.suggest("hood");
+    assert.deepEqual(suggestions, [ 'hoodlum', 'hoodlumism', 'hoodlumize', 'hooded', 'hoodedness', 'hoodful', 'hood', 'hoodcap', 'hoodlike', 'hoodless', 'hoodlumish',
+    'hoodie', 'hoodman', 'hoodmold', 'hoodoo', 'hoodsheaf', 'hoodshy', 'hoodshyness', 'hoodwink', 'hoodwinkable', 'hoodwinker', 'hoodwise', 'hoodwort' ])
   })
 
 

@@ -37,16 +37,22 @@ export class Trie {
       this.suggest(text + key, suggestionArr)
     })
 
+
     suggestionArr.sort(function(a, b) {
       return b.timesSelected - a.timesSelected
     })
 
+    // eval(locus)
+    console.log("!-------------!")
+    console.log(suggestionArr)
+
     let sortedArray = suggestionArr.map(obj => {
-      return obj['word']
+      return obj.word
     })
 
     return sortedArray;
   }
+  
 
   select(input, selected) {
     let priorityWord = this.suggest(input).find(val => {
@@ -59,20 +65,14 @@ export class Trie {
   insert (input) {
 
     let currentNode = this.root
-    let accumLetters = ''
-
-    // this.dictionary.push(input)
 
     input.split('').forEach(letter => {
-
 
       if (currentNode.children[letter]) {
         return currentNode = currentNode.children[letter]
       }
       currentNode.children[letter] = new Node(letter)
       currentNode = currentNode.children[letter]
-      accumLetters = accumLetters + letter
-      currentNode.address = accumLetters
     })
     currentNode.isWord = true
     this.counter++
@@ -87,6 +87,5 @@ export class Trie {
     dictionary.forEach(word => {
       this.insert(word)
     })
-
   }
 }
