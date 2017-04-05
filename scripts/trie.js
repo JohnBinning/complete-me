@@ -45,8 +45,19 @@ export class Trie {
     let sortedArray = suggestionArr.map(obj => {
       return obj['word']
     })
-    
+
     return sortedArray;
+  }
+
+  select(text, priority) {
+    let suggested = this.suggest(text)
+    let identification = suggested.find(val => {
+      return val === priority
+    })
+
+    let node = this.findNode(identification)
+    node.timesSelected++
+
   }
 
   insert (input) {
