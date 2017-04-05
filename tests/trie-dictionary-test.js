@@ -22,6 +22,12 @@ describe('trie-dictionary', () =>{
     assert.deepEqual(completion.suggest("piz"), ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"])
   })
 
+  it('select should move priority words to the front of the suggest array', () => {
+    assert.deepEqual(completion.suggest("piz"), ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"])
+    completion.select('piz', 'pizzeria')
+    assert.deepEqual(completion.suggest("piz"), ["pizzeria", "pize", "pizza", "pizzicato", "pizzle"])
+  })
+
 
 
 })
