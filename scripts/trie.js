@@ -49,13 +49,12 @@ export class Trie {
     return sortedArray;
   }
 
-  select(text, priority) {
-    let suggested = this.suggest(text)
-    let identification = suggested.find(val => {
-      return val === priority
+  select(input, selected) {
+    let priorityWord = this.suggest(input).find(val => {
+      return val === selected
     })
 
-    let node = this.findNode(identification)
+    let node = this.findNode(priorityWord)
     node.timesSelected++
 
   }
