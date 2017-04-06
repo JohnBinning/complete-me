@@ -1,5 +1,7 @@
 import { assert } from 'chai'
 import { Trie } from '../scripts/trie'
+var fs = require('fs')
+const text = "/usr/share/dict/words"
 
 require('locus')
 
@@ -26,8 +28,16 @@ describe('populate', () =>{
 
   it('should have a specific word in the populated trie', () => {
 
-    completions.insert('bear')
     assert.equal(completions.findNode('bear').isWord, true)
+  })
+
+  it('should be able to insert a new word into the populated tree', () => {
+    let dictionary = fs.readFileSync(text).toString().trim().split('\n')
+
+    assert.equal(dictionary.includes('azfj'), false)
+    completions.insert('azfj')
+    assert.property(completions.root.children['a'].children['z'].children['f'].children, 'j')
+    assert.equal(completions.findNode('azfj').isWord, true)
   })
 })
 

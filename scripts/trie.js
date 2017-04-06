@@ -59,7 +59,6 @@ export class Trie {
   }
 
   insert (input) {
-
     let currentNode = this.root
 
     input.toLowerCase().split('').forEach(letter => {
@@ -75,6 +74,7 @@ export class Trie {
       this.counter++
     }
   }
+
   count () {
     return this.counter
   }
