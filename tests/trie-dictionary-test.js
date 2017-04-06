@@ -8,7 +8,11 @@ describe('populate', () =>{
 
   var completions = new Trie
 
-  it('should populate the trie with the dictionary', () => {
+  it('should be a function', () => {
+    assert.isFunction(completions.populate)
+  })
+
+  it('should increase the number of words in the trie when populated', () => {
 
     assert.equal(completions.count(), 0)
     completions.populate()
@@ -29,6 +33,12 @@ describe('populate', () =>{
 
 
 describe('select', () =>{
+
+  var completions = new Trie
+
+  it('should be a function', () => {
+    assert.isFunction(completions.select)
+  })
 
   it('select should move priority words to the front of the suggest array', () => {
     var completion = new Trie

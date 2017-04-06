@@ -26,6 +26,10 @@ describe('findNode', () => {
 
   var completion = new Trie
 
+  it('should be a function', () => {
+    assert.isFunction(completion.findNode)
+  })
+
   it('should find a node', () => {
     completion.insert('bert')
     completion.insert('berth')
@@ -69,8 +73,15 @@ describe('findNode', () => {
 
 describe('count', () => {
 
+  it('should be a function', () => {
+    var completion = new Trie
+
+    assert.isFunction(completion.count)
+  })
+
   it('should count words', () => {
     var completion = new Trie
+
     assert.equal(completion.count(), 0)
     completion.insert('ape')
     assert.equal(completion.count(), 1)
@@ -93,6 +104,10 @@ describe('insert', () => {
 
   var completion = new Trie
 
+  it('should be a function', () => {
+    assert.isFunction(completion.insert)
+  })
+
   it('should make a node', () => {
     completion.insert('ape')
     assert.equal(completion.root.children.a.data, 'a')
@@ -113,6 +128,12 @@ describe('insert', () => {
 })
 
 describe('suggest', () => {
+
+  it('should be a function', () => {
+    var completion = new Trie
+
+    assert.isFunction(completion.suggest)
+  })
 
   it('should return an array of suggested words', () => {
     let newTrie = new Trie('b')
