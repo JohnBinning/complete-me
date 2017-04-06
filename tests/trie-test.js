@@ -180,6 +180,14 @@ describe('countAdder', () => {
 
     assert.isFunction(completion.countAdder)
   })
+
+  it('should add to wordcount', () => {
+    var completion = new Trie
+
+    assert.equal(completion.counter, 0)
+    completion.countAdder()
+    assert.equal(completion.counter, 1)
+  })
 })
 
 describe('suggest', () => {
