@@ -157,10 +157,18 @@ describe('insert', () => {
   })
 
   it('should not overwrite isWord on a node that is already true when inserting a longer version of the same word', () => {
-    completion.insert('bed')
-    assert.equal(completion.root.children['b'].children['e'].children['d'].isWord, true)
-    completion.insert('bedbug')
-    assert.equal(completion.root.children['b'].children['e'].children['d'].isWord, true)
+    completion.insert('met')
+    assert.equal(completion.root.children['m'].children['e'].children['t'].isWord, true)
+    completion.insert('metal')
+    assert.equal(completion.root.children['m'].children['e'].children['t'].isWord, true)
+  })
+
+  it('should add to the word counter', () => {
+    var completion = new Trie
+
+    assert.equal(completion.counter, 0)
+    completion.insert('bear')
+    assert.equal(completion.counter, 1)
   })
 })
 
@@ -171,21 +179,39 @@ describe('wordMaker', () => {
 
     assert.isFunction(completion.wordMaker)
   })
+
+  it('should make isWord true on a node', () => {
+    var completion = new Trie
+    var node = new Node
+
+    assert.equal(node.isWord, false)
+    completion.wordMaker(node)
+    assert.equal(node.isWord, true)
+  })
+
+  it('should add to the word counter', () => {
+    var completion = new Trie
+    var node = new Node
+
+    assert.equal(completion.counter, 0)
+    completion.wordMaker(node)
+    assert.equal(completion.counter, 1)
+  })
 })
 
-describe('countAdder', () => {
+describe('addToWordCount', () => {
 
   it('should be a function', () => {
     var completion = new Trie
 
-    assert.isFunction(completion.countAdder)
+    assert.isFunction(completion.addToWordCount)
   })
 
-  it('should add to wordcount', () => {
+  it('should add to the word counter', () => {
     var completion = new Trie
 
     assert.equal(completion.counter, 0)
-    completion.countAdder()
+    completion.addToWordCount()
     assert.equal(completion.counter, 1)
   })
 })

@@ -80,11 +80,11 @@ export class Trie {
 
     if (!currentNode.isWord) {
       currentNode.isWord = true
-      this.countAdder()
+      this.addToWordCount()
     }
   }
 
-  countAdder () {
+  addToWordCount () {
     this.counter++
   }
 
