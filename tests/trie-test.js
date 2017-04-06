@@ -16,40 +16,15 @@ describe('trie', () => {
     assert.instanceOf(completion, Trie, 'completion is an instance of Trie')
   })
 
-  it('should count words', () => {
-    assert.equal(completion.count(), 0)
-    completion.insert('ape')
-    assert.equal(completion.count(), 1)
-    completion.insert('ape')
-    assert.equal(completion.count(), 1)
-  })
+  it('should be an object', () => {
 
-  it('should not count duplicate words', () => {
-    var completion2 = new Trie
-
-    assert.equal(completion2.count(), 0)
-    completion2.insert('ape')
-    assert.equal(completion2.count(), 1)
-    completion2.insert('ape')
-    assert.equal(completion2.count(), 1)
+    assert.isObject(completion)
   })
+})
 
-  it('should make a node', () => {
-    completion.insert('ape')
-    assert.equal(completion.root.children.a.data, 'a')
-    assert.equal(completion.root.children.a.children.p.data, 'p')
-  })
+describe('findNode', () => {
 
-  it('should have a node for the last letter in the first word', () => {
-    completion.insert('bat')
-    completion.insert('bed')
-    assert.property(completion.root.children['b'].children['a'].children, 't')
-  })
-
-  it('should have a node for last letter in a second similar word', () => {
-    completion.insert('bar')
-    assert.property(completion.root.children['b'].children['a'].children, 'r')
-  })
+  var completion = new Trie
 
   it('should find a node', () => {
     completion.insert('bert')
@@ -90,6 +65,54 @@ describe('trie', () => {
     assert.deepEqual(completion.findNode('anth').isWord, false)
     assert.deepEqual(completion.findNode('anthem').isWord, true)
   })
+})
+
+describe('count', () => {
+
+  it('should count words', () => {
+    var completion = new Trie
+    assert.equal(completion.count(), 0)
+    completion.insert('ape')
+    assert.equal(completion.count(), 1)
+    completion.insert('ape')
+    assert.equal(completion.count(), 1)
+  })
+
+  it('should not count duplicate words', () => {
+    var completion2 = new Trie
+
+    assert.equal(completion2.count(), 0)
+    completion2.insert('ape')
+    assert.equal(completion2.count(), 1)
+    completion2.insert('ape')
+    assert.equal(completion2.count(), 1)
+  })
+})
+
+describe('insert', () => {
+
+  var completion = new Trie
+
+  it('should make a node', () => {
+    completion.insert('ape')
+    assert.equal(completion.root.children.a.data, 'a')
+    assert.equal(completion.root.children.a.children.p.data, 'p')
+  })
+
+  it('should have a node for the last letter in the first word', () => {
+    completion.insert('bat')
+    completion.insert('bed')
+    assert.property(completion.root.children['b'].children['a'].children, 't')
+  })
+
+  it('should have a node for last letter in a second similar word', () => {
+    completion.insert('bar')
+    assert.property(completion.root.children['b'].children['a'].children, 'r')
+  })
+
+})
+
+describe('suggest', () => {
 
   it('should return an array of suggested words', () => {
     let newTrie = new Trie('b')
@@ -116,5 +139,6 @@ describe('trie', () => {
 
     assert.deepEqual(suggs, ['pizza', 'pit', 'pie'])
   })
+
 
 })

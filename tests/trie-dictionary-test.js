@@ -4,35 +4,35 @@ import { Trie } from '../scripts/trie'
 require('locus')
 
 
-describe('trie-dictionary', () =>{
+describe('populate', () =>{
+
+  var completions = new Trie
 
   it('should populate the trie with the dictionary', () => {
-    var completion = new Trie
-    assert.equal(completion.count(), 0)
-    completion.populate()
-    assert.equal(completion.count(), 234371)
+
+    assert.equal(completions.count(), 0)
+    completions.populate()
+    assert.equal(completions.count(), 234371)
   })
 
-  it('should have the word bear in the trie', () => {
-    var completion = new Trie
-    completion.insert('bear')
+  it('should suggest words from the populated trie', () => {
 
-    assert.equal(completion.findNode('bear').isWord, true)
+    assert.deepEqual(completions.suggest("piz"), ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"])
   })
 
-  it('should suggest words', () => {
-    var completion = new Trie
-    completion.insert('pize')
-    completion.insert('pizza')
-    completion.insert('pizzeria')
-    completion.insert('pizzicato')
-    completion.insert('pizzle')
+  it('should have a specific word in the populated trie', () => {
 
-    assert.deepEqual(completion.suggest("piz"), ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"])
+    completions.insert('bear')
+    assert.equal(completions.findNode('bear').isWord, true)
   })
+})
+
+
+describe('select', () =>{
 
   it('select should move priority words to the front of the suggest array', () => {
     var completion = new Trie
+
     completion.insert('pize')
     completion.insert('pizza')
     completion.insert('pizzeria')
@@ -65,6 +65,7 @@ describe('trie-dictionary', () =>{
   it('select should move two priority words to the front of the suggest array', () => {
 
     var completion = new Trie
+
     completion.insert('hoodless')
     completion.insert('hoodlike')
     completion.insert('hoodlum')
@@ -79,7 +80,4 @@ describe('trie-dictionary', () =>{
     assert.deepEqual(completion.suggest("hoodl"), [  'hoodlumish', 'hoodlumize', 'hoodless', 'hoodlike', 'hoodlum', 'hoodlumism' ])
 
   })
-
-
-
 })
