@@ -10,7 +10,7 @@ describe('trie-dictionary', () =>{
     var completion = new Trie
     assert.equal(completion.count(), 0)
     completion.populate()
-    assert.equal(completion.count(), 235886)
+    assert.equal(completion.count(), 234371)
   })
 
   it('should have the word bear in the trie', () => {
@@ -71,7 +71,7 @@ describe('trie-dictionary', () =>{
     completion.insert('hoodlumish')
     completion.insert('hoodlumism')
     completion.insert('hoodlumize')
-    
+
     assert.deepEqual(completion.suggest("hoodl"), [ 'hoodless', 'hoodlike', 'hoodlum', 'hoodlumish', 'hoodlumism', 'hoodlumize' ])
 
     completion.select('hoodl', 'hoodlumish')

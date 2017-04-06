@@ -20,8 +20,8 @@ describe('trie', () => {
     assert.equal(completion.count(), 0)
     completion.insert('ape')
     assert.equal(completion.count(), 1)
-    completion.insert('ale')
-    assert.equal(completion.count(), 2)
+    completion.insert('ape')
+    assert.equal(completion.count(), 1)
   })
 
   it('should not count duplicate words', () => {
@@ -55,15 +55,19 @@ describe('trie', () => {
     completion.insert('bert')
     completion.insert('berth')
 
-    assert.deepEqual(completion.findNode('ber'), completion.root.children['b'].children['e'].children['r'])
+    assert.deepEqual(completion.findNode('ber'),
+    completion.root.children['b'].children['e'].children['r'])
   })
 
   it('should find another node', () => {
     completion.insert('protein')
     completion.insert('program')
 
-    assert.deepEqual(completion.findNode('prot'), completion.root.children['p'].children['r'].children['o'].children['t'])
-    assert.deepEqual(completion.findNode('prog'), completion.root.children['p'].children['r'].children['o'].children['g'])
+    assert.deepEqual(completion.findNode('prot'),
+    completion.root.children['p'].children['r'].children['o'].children['t'])
+
+    assert.deepEqual(completion.findNode('prog'),
+    completion.root.children['p'].children['r'].children['o'].children['g'])
   })
 
   it('should have isWord be true on all words', () => {

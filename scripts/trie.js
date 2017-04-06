@@ -6,7 +6,6 @@ require('locus')
 
 export class Trie {
   constructor() {
-    // this.dictionary = []
     this.counter = 0
     this.root = new Node('')
   }
@@ -18,9 +17,6 @@ export class Trie {
       if (currentNode.children[letter] !== letter) {
         currentNode = currentNode.children[letter]
       }
-      // if (currentNode.address == input) {
-      //   return currentNode
-      // }
     })
     return currentNode
   }
@@ -38,19 +34,6 @@ export class Trie {
     })
 
     return suggestionArr
-    // suggestionArr.sort(function(a, b) {
-    //   return b.timesSelected - a.timesSelected
-    // })
-
-    // eval(locus)
-    // console.log("!-------------!")
-    // console.log(suggestionArr)
-    //
-    // let sortedArray = suggestionArr.map(obj => {
-    //   return obj.word
-    // })
-    //
-    // return sortedArray;
   }
 
   suggest (text) {
@@ -87,8 +70,10 @@ export class Trie {
       currentNode.children[letter] = new Node(letter)
       currentNode = currentNode.children[letter]
     })
-    currentNode.isWord == false ? this.counter++ : null
-    currentNode.isWord = true
+    if (!currentNode.isWord) {
+      currentNode.isWord = true
+      this.counter++
+    }
   }
   count () {
     return this.counter
