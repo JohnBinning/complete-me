@@ -36,7 +36,7 @@ export class Trie {
     return suggestionArr
   }
 
-  suggestToStrings (text) {
+  suggestSort (text) {
     let suggestionArr = this.suggestMachine(text)
 
     suggestionArr.sort(function(a, b) {
@@ -46,7 +46,7 @@ export class Trie {
   }
 
   suggest (text) {
-    let sortedArray = this.suggestToStrings(text).map(obj => {
+    let sortedArray = this.suggestSort(text).map(obj => {
       return obj.word
     })
 

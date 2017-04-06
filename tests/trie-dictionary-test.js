@@ -73,17 +73,12 @@ describe('select', () =>{
     completion.insert('hoodlumism')
     completion.insert('hoodlumize')
 
-
     assert.deepEqual(completion.suggest("hoodl"), [ 'hoodless', 'hoodlike', 'hoodlum', 'hoodlumish', 'hoodlumism', 'hoodlumize' ])
-
     completion.select('hoodl', 'hoodlumish')
-
     assert.deepEqual(completion.suggest("hoodl"), [  'hoodlumish', 'hoodless', 'hoodlike', 'hoodlum', 'hoodlumism', 'hoodlumize' ])
-
   })
 
   it('select should move two priority words to the front of the suggest array', () => {
-
     var completion = new Trie
 
     completion.insert('hoodless')
@@ -98,6 +93,24 @@ describe('select', () =>{
     completion.select('hoodl', 'hoodlumish')
     completion.select('hoodl', 'hoodlumize')
     assert.deepEqual(completion.suggest("hoodl"), [  'hoodlumish', 'hoodlumize', 'hoodless', 'hoodlike', 'hoodlum', 'hoodlumism' ])
+  })
 
+  it('select should rank priority words in order over more than two values', () => {
+    var completion = new Trie
+
+    completion.insert('hoodless')
+    completion.insert('hoodlike')
+    completion.insert('hoodlum')
+    completion.insert('hoodlumish')
+    completion.insert('hoodlumism')
+    completion.insert('hoodlumize')
+
+    assert.deepEqual(completion.suggest("hoodl"), [ 'hoodless', 'hoodlike', 'hoodlum', 'hoodlumish', 'hoodlumism', 'hoodlumize' ])
+
+    completion.select('hoodl', 'hoodlumish')
+    completion.select('hoodl', 'hoodlumize')
+    assert.deepEqual(completion.suggest("hoodl"), [  'hoodlumish', 'hoodlumize', 'hoodless', 'hoodlike', 'hoodlum', 'hoodlumism' ])
+    completion.select('hoodl', 'hoodlumize')
+    assert.deepEqual(completion.suggest("hoodl"), [  'hoodlumize', 'hoodlumish', 'hoodless', 'hoodlike', 'hoodlum', 'hoodlumism' ])
   })
 })

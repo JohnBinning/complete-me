@@ -2,8 +2,8 @@ import { assert } from 'chai'
 import { Trie } from '../scripts/trie'
 import { Node } from '../scripts/node'
 
-
 require('locus')
+
 
 describe('trie', () => {
 
@@ -206,7 +206,7 @@ describe('suggest', () => {
     assert.equal(Array.isArray(suhArray), true)
   })
 
-  it('the resulting array should have objects as value types', () => {
+  it('the resulting array should have strings as value types', () => {
     var completion = new Trie
 
     completion.insert('suh')
@@ -221,6 +221,7 @@ describe('suggest', () => {
 })
 
 describe('suggestMachine', () => {
+
   var completion = new Trie
 
   it('should be a function', () => {
@@ -234,7 +235,7 @@ describe('suggestMachine', () => {
     assert.equal(Array.isArray(suhArray), true)
   })
 
-  it('the resulting array should have objects as value types', () => {
+  it('should return the resulting array values as objects', () => {
     completion.insert('suh')
     completion.insert('suhdude')
     completion.insert('suhdudes')
@@ -244,6 +245,21 @@ describe('suggestMachine', () => {
     assert.equal(typeof(suhArray[1]), 'object')
     assert.equal(typeof(suhArray[2]), 'object')
   })
+})
 
+describe('suggestSort', () => {
 
+  var completion = new Trie
+
+  it('should be a function', () => {
+
+    assert.isFunction(completion.suggestSort)
+  })
+
+  it('should return an array', () => {
+    completion.insert('suh')
+    let suhArray = completion.suggestSort('suh')
+
+    assert.equal(Array.isArray(suhArray), true)
+  })
 })
