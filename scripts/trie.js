@@ -7,7 +7,7 @@ require('locus')
 export class Trie {
   constructor() {
     this.counter = 0
-    this.root = new Node('')
+    this.root = new Node()
   }
 
   findNode(input) {
@@ -36,14 +36,17 @@ export class Trie {
     return suggestionArr
   }
 
-  suggest (text) {
+  suggestToStrings (text) {
     let suggestionArr = this.suggestMachine(text)
 
     suggestionArr.sort(function(a, b) {
       return b.timesSelected - a.timesSelected
     })
+    return suggestionArr
+  }
 
-    let sortedArray = suggestionArr.map(obj => {
+  suggest (text) {
+    let sortedArray = this.suggestToStrings(text).map(obj => {
       return obj.word
     })
 
