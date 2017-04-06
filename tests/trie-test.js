@@ -172,6 +172,15 @@ describe('suggest', () => {
     assert.isFunction(completion.suggest)
   })
 
+  it('should return an array', () => {
+    var completion = new Trie
+
+    completion.insert('suh')
+    let suhArray = completion.suggest('suh')
+
+    assert.equal(Array.isArray(suhArray), true)
+  })
+
   it('should return an array of suggested words', () => {
     let newTrie = new Trie('b')
 
@@ -195,15 +204,6 @@ describe('suggest', () => {
     let suggs = newTrie.suggest('pi')
 
     assert.deepEqual(suggs, ['pizza', 'pit', 'pie'])
-  })
-
-  it('should return an array', () => {
-    var completion = new Trie
-
-    completion.insert('suh')
-    let suhArray = completion.suggest('suh')
-
-    assert.equal(Array.isArray(suhArray), true)
   })
 
   it('the resulting array should have strings as value types', () => {
@@ -261,5 +261,16 @@ describe('suggestSort', () => {
     let suhArray = completion.suggestSort('suh')
 
     assert.equal(Array.isArray(suhArray), true)
+  })
+
+  it('should return the resulting array values as objects', () => {
+    completion.insert('suh')
+    completion.insert('suhdude')
+    completion.insert('suhdudes')
+    let suhArray = completion.suggestSort('suh')
+
+    assert.equal(typeof(suhArray[0]), 'object')
+    assert.equal(typeof(suhArray[1]), 'object')
+    assert.equal(typeof(suhArray[2]), 'object')
   })
 })
