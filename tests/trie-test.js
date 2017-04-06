@@ -164,6 +164,24 @@ describe('insert', () => {
   })
 })
 
+describe('wordMaker', () => {
+
+  it('should be a function', () => {
+    var completion = new Trie
+
+    assert.isFunction(completion.wordMaker)
+  })
+})
+
+describe('countAdder', () => {
+
+  it('should be a function', () => {
+    var completion = new Trie
+
+    assert.isFunction(completion.countAdder)
+  })
+})
+
 describe('suggest', () => {
 
   it('should be a function', () => {

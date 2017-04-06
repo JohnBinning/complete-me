@@ -72,10 +72,20 @@ export class Trie {
       currentNode.children[letter] = new Node(letter)
       currentNode = currentNode.children[letter]
     })
+    this.wordMaker(currentNode)
+  }
+
+  wordMaker (input) {
+    let currentNode = input
+
     if (!currentNode.isWord) {
       currentNode.isWord = true
-      this.counter++
+      this.countAdder()
     }
+  }
+
+  countAdder () {
+    this.counter++
   }
 
   count () {
