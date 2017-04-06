@@ -1,11 +1,9 @@
 import { assert } from 'chai'
 import { Node } from '../scripts/node'
-import { Trie } from '../scripts/trie'
 require('locus')
 
 
 describe('node', () => {
-  var completion = new Trie()
 
   it('should be a function', () => {
     assert.isFunction(Node)
@@ -17,7 +15,7 @@ describe('node', () => {
     assert.isObject(node)
   })
 
-  it('should be a constructor', () => {
+  it('should be a class with a constructor', () => {
     var node = new Node('pizza')
 
     assert.instanceOf(node, Node, 'node is an instance of Node')
@@ -47,10 +45,9 @@ describe('node', () => {
     assert.equal(node.timesSelected, 0)
   })
 
-  it('should default children to empty object', () => {
+  it('should default children to an empty object', () => {
     var node = new Node('pizza')
 
     assert.deepEqual(node.children, {})
   })
-
 })
