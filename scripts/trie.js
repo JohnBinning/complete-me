@@ -4,30 +4,25 @@ const text = "/usr/share/dict/words"
 
 require('locus')
 
-
 export class Trie {
   constructor() {
-    // this.dictionary = []
     this.counter = 0
     this.root = new Node('')
   }
 
   findNode(input) {
-    let currentNode = this.root;
+    let currentNode = this.root
 
     input.split('').forEach(letter => {
       if (currentNode.children[letter] !== letter) {
-        currentNode = currentNode.children[letter];
+        currentNode = currentNode.children[letter]
       }
-      // if (currentNode.address == input) {
-      //   return currentNode
-      // }
     })
     return currentNode
   }
 
-  suggest (text, suggestion = []) {
-    let currentNode = this.findNode(text);
+  suggestMachine (text, suggestion = []) {
+    let currentNode = this.findNode(text)
     let suggestionArr = suggestion;
 
     if (currentNode.isWord) {
@@ -35,15 +30,21 @@ export class Trie {
     }
 
     Object.keys(currentNode.children).forEach(key => {
-      this.suggest(text + key, suggestionArr)
+      this.suggestMachine(text + key, suggestionArr)
     })
+
+    return suggestionArr
+  }
+
+  suggest (text) {
+    let suggestionArr = this.suggestMachine(text)
 
     suggestionArr.sort(function(a, b) {
       return b.timesSelected - a.timesSelected
     })
 
     let sortedArray = suggestionArr.map(obj => {
-      return obj['word']
+      return obj.word
     })
 
     return sortedArray;
@@ -54,41 +55,35 @@ export class Trie {
       return val === selected
     })
 
-    let node = this.findNode(priorityWord)
-    node.timesSelected++
-
+    this.findNode(priorityWord).timesSelected++
   }
 
   insert (input) {
+    let currentNode = this.root
 
-    let currentNode = this.root;
-    let accumLetters = '';
-
-    // this.dictionary.push(input)
-
-    input.split('').forEach(letter => {
-
+    input.toLowerCase().split('').forEach(letter => {
 
       if (currentNode.children[letter]) {
-        return currentNode = currentNode.children[letter];
+        return currentNode = currentNode.children[letter]
       }
-      currentNode.children[letter] = new Node(letter);
-      currentNode = currentNode.children[letter];
-      accumLetters = accumLetters + letter;
-      currentNode.address = accumLetters;
+      currentNode.children[letter] = new Node(letter)
+      currentNode = currentNode.children[letter]
     })
-    currentNode.isWord = true;
-    this.counter++
+    if (!currentNode.isWord) {
+      currentNode.isWord = true
+      this.counter++
+    }
   }
+
   count () {
     return this.counter
   }
 
   populate () {
     let dictionary = fs.readFileSync(text).toString().trim().split('\n')
-    dictionary.forEach(word => {
+
+    dictionary.forEach( word => {
       this.insert(word)
     })
-
   }
 }

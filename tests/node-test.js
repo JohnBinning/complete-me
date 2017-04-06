@@ -11,13 +11,16 @@ describe('node', () => {
     assert.isFunction(Node)
   })
 
-  it('should have an address', () => {
-    completion.insert('ape')
-    completion.insert('cool')
-    // console.log(completion.root.children)
-    // console.log(completion.root.children.p.children)
-    assert.equal(completion.root.children.a.data, 'a')
-    assert.equal(completion.root.children.a.children.p.address, 'ap')
+  it('should be an object', () => {
+    var node = new Node('pizza')
+
+    assert.isObject(node)
+  })
+
+  it('should be a constructor', () => {
+    var node = new Node('pizza')
+
+    assert.instanceOf(node, Node, 'node is an instance of Node')
   })
 
   it('should take a data value', () => {
@@ -26,10 +29,28 @@ describe('node', () => {
     assert.equal(node.data, 'pizza')
   })
 
+  it('should have a null data value by default', () => {
+    var node2 = new Node()
+
+    assert.isNull(node2.data, 'nothing here')
+  })
+
   it('should not be a word by default', () => {
     var node = new Node('asds')
 
     assert.equal(node.isWord, false)
+  })
+
+  it('should default to 0 times selected', () => {
+    var node = new Node('pizza')
+
+    assert.equal(node.timesSelected, 0)
+  })
+
+  it('should default children to empty object', () => {
+    var node = new Node('pizza')
+
+    assert.deepEqual(node.children, {})
   })
 
 })
